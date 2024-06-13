@@ -27,6 +27,7 @@ public class CountryLanguage {
 
     private String language;
 
+    @Column(name = "is_official")
     private Boolean isOfficial;
 
     private BigDecimal percentage;
