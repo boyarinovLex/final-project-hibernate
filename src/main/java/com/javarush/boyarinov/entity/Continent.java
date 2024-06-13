@@ -1,4 +1,4 @@
-package entity;
+package com.javarush.boyarinov.entity;
 
 public enum Continent {
 

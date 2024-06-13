@@ -1,8 +1,8 @@
-package config;
+package com.javarush.boyarinov.config;
 
-import entity.City;
-import entity.Country;
-import entity.CountryLanguage;
+import com.javarush.boyarinov.entity.City;
+import com.javarush.boyarinov.entity.Country;
+import com.javarush.boyarinov.entity.CountryLanguage;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -10,6 +10,7 @@ import org.hibernate.cfg.Configuration;
 public class SessionCreator {
 
     private final SessionFactory sessionFactory;
+    private Session session = null;
 
     public SessionCreator() {
         sessionFactory = new Configuration()
@@ -21,7 +22,10 @@ public class SessionCreator {
     }
 
     public Session getSession() {
-        return sessionFactory.openSession();
+        session = session == null || !session.isOpen()
+                ? sessionFactory.openSession()
+                : session;
+        return session;
     }
 
     public void close() {

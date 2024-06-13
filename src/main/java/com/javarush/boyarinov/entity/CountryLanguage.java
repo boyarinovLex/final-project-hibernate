@@ -1,4 +1,4 @@
-package entity;
+package com.javarush.boyarinov.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Getter
@@ -13,29 +14,30 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "city", schema = "world")
-public class City {
+@Table(name = "country_language", schema = "world")
+public class CountryLanguage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String name;
-
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "country_id")
     private Country country;
 
-    private String district;
+    private String language;
 
-    private Integer population;
+    @Column(name = "is_official")
+    private Boolean isOfficial;
+
+    private BigDecimal percentage;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        City city = (City) o;
-        return Objects.equals(id, city.id);
+        CountryLanguage that = (CountryLanguage) o;
+        return Objects.equals(id, that.id);
     }
 
     @Override
