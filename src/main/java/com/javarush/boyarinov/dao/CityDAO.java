@@ -2,50 +2,28 @@ package com.javarush.boyarinov.dao;
 
 import com.javarush.boyarinov.config.SessionCreator;
 import com.javarush.boyarinov.entity.City;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 public class CityDAO {
 
     private final SessionCreator sessionCreator;
 
-    public CityDAO(SessionCreator sessionCreator) {
-        this.sessionCreator = sessionCreator;
-    }
-
     public List<City> getItems(int offset, int limit) {
-//        try (Session session = sessionCreator.getSession()) {
-//            Transaction tx = session.beginTransaction();
-        try {
-            Session session = sessionCreator.getSession(); //TODO create nested transactions
-            Query<City> cityQuery = session.createQuery("FROM City", City.class);
-            cityQuery.setFirstResult(offset);
-            cityQuery.setMaxResults(limit);
-            List<City> cities = cityQuery.list();
-//                tx.commit();
-            return cities;
-        } catch (Exception e) {
-//                tx.rollback();
-            throw new RuntimeException(e);
-        }
-//        }
+        Session session = sessionCreator.getSession();
+        Query<City> cityQuery = session.createQuery("FROM City", City.class);
+        cityQuery.setFirstResult(offset);
+        cityQuery.setMaxResults(limit);
+        return cityQuery.list();
     }
 
     public long getTotalCount() {
-//        try(Session session = sessionCreator.getSession()) {
-//            Transaction tx = session.beginTransaction();
-        try {
-            Session session = sessionCreator.getSession(); //TODO create nested transactions
-            Query<Long> query = session.createQuery("SELECT COUNT(c) FROM City c", Long.class);
-            long totalCount = query.uniqueResult();
-//                tx.commit();
-            return totalCount;
-        } catch (Exception e) {
-//                tx.rollback();
-            throw new RuntimeException(e);
-        }
-//        }
+        Session session = sessionCreator.getSession();
+        Query<Long> query = session.createQuery("SELECT COUNT(c) FROM City c", Long.class);
+        return query.uniqueResult();
     }
 }
