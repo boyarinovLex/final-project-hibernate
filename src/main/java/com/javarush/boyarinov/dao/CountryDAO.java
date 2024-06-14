@@ -19,7 +19,7 @@ public class CountryDAO {
 //        try(Session session = sessionCreator.getSession()) {
 //            Transaction tx = session.beginTransaction();
             try {
-                Session session = sessionCreator.getSession(); //TODO delete
+                Session session = sessionCreator.getSession(); //TODO create nested transactions
                 Query<Country> countryQuery = session.createQuery("SELECT c FROM Country c JOIN FETCH c.languages", Country.class);
                 List<Country> countries = countryQuery.list();
 //                tx.commit();

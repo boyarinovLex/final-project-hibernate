@@ -19,7 +19,7 @@ public class CityDAO {
 //        try (Session session = sessionCreator.getSession()) {
 //            Transaction tx = session.beginTransaction();
         try {
-            Session session = sessionCreator.getSession(); //TODO delete
+            Session session = sessionCreator.getSession(); //TODO create nested transactions
             Query<City> cityQuery = session.createQuery("FROM City", City.class);
             cityQuery.setFirstResult(offset);
             cityQuery.setMaxResults(limit);
@@ -37,7 +37,7 @@ public class CityDAO {
 //        try(Session session = sessionCreator.getSession()) {
 //            Transaction tx = session.beginTransaction();
         try {
-            Session session = sessionCreator.getSession(); //TODO delete
+            Session session = sessionCreator.getSession(); //TODO create nested transactions
             Query<Long> query = session.createQuery("SELECT COUNT(c) FROM City c", Long.class);
             long totalCount = query.uniqueResult();
 //                tx.commit();
