@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import java.util.List;
+import java.util.Set;
 
 @RequiredArgsConstructor
 public class CityDAO {
@@ -25,5 +26,19 @@ public class CityDAO {
         Session session = sessionCreator.getSession();
         Query<Long> query = session.createQuery("SELECT COUNT(c) FROM City c", Long.class);
         return query.uniqueResult();
+    }
+
+    public City getById(Integer id) {
+        Session session = sessionCreator.getSession();
+        Query<City> query = session.createQuery("SELECT c FROM City c JOIN FETCH c.country WHERE c.id = :ID", City.class);
+        query.setParameter("ID", id);
+        return query.uniqueResult();
+    }
+
+    public List<City> getListByIds(Set<Integer> ids) {
+        Session session = sessionCreator.getSession();
+        Query<City> query = session.createQuery("SELECT c FROM City c JOIN FETCH c.country WHERE c.id IN (:IDS)", City.class);
+        query.setParameter("IDS", ids);
+        return query.list();
     }
 }

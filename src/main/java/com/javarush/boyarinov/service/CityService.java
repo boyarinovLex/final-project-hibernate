@@ -11,6 +11,7 @@ import org.hibernate.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @RequiredArgsConstructor
 public class CityService {
@@ -32,6 +33,34 @@ public class CityService {
                 }
                 tx.commit();
                 return allCities;
+            } catch (Exception e) {
+                tx.rollback();
+                throw new AppException(e);
+            }
+        }
+    }
+
+    public City getById(Integer id) {
+        try (Session session = sessionCreator.getSession()) {
+            Transaction tx = session.beginTransaction();
+            try {
+                City city = cityDAO.getById(id);
+                tx.commit();
+                return city;
+            } catch (Exception e) {
+                tx.rollback();
+                throw new AppException(e);
+            }
+        }
+    }
+
+    public List<City> getListByIds(Set<Integer> ids) {
+        try (Session session = sessionCreator.getSession()) {
+            Transaction tx = session.beginTransaction();
+            try {
+                List<City> cityList = cityDAO.getListByIds(ids);
+                tx.commit();
+                return cityList;
             } catch (Exception e) {
                 tx.rollback();
                 throw new AppException(e);
