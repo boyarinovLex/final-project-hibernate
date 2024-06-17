@@ -1,14 +1,16 @@
 package com.javarush.boyarinov.redis;
 
 import com.javarush.boyarinov.entity.Continent;
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @Data
-@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class CityCountry {
 
     private Integer id;

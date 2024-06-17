@@ -8,6 +8,7 @@ import com.javarush.boyarinov.service.CityService;
 import com.javarush.boyarinov.service.RedisService;
 
 import java.util.List;
+import java.util.Set;
 
 public class AppStarter {
 
@@ -21,6 +22,18 @@ public class AppStarter {
         List<City> cities = cityService.fetchData();
         List<CityCountry> cityCountryList = redisService.transformData(cities);
         redisService.pushToRedis(cityCountryList);
+
+        Set<Integer> ids = Set.of(1860, 1864, 1867, 1866, 1865);
+
+        long startRedis = System.currentTimeMillis();
+        redisService.getFromRedis(ids);
+        long endRedis = System.currentTimeMillis();
+
+        long startDB = System.currentTimeMillis();
+        cityService.getListByIds(ids);
+        long endDB = System.currentTimeMillis();
+
+        System.out.printf("Query execution time:\nRedis:\t%d\nDatabase:\t%d\n", (endRedis - startRedis), (endDB - startDB));
 
         sessionCreator.close();
     }

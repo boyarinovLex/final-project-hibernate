@@ -33,26 +33,29 @@ public class RedisService {
                     Country country = city.getCountry();
                     Set<CountryLanguage> countryLanguages = country.getLanguages();
                     List<Language> languages = countryLanguages.stream()
-                            .map(cl -> Language.builder()
-                                    .language(cl.getLanguage())
-                                    .isOfficial(cl.getIsOfficial())
-                                    .percentage(cl.getPercentage())
-                                    .build())
+                            .map(cl ->
+                            {
+                                Language language = new Language();
+                                language.setLanguage(cl.getLanguage());
+                                language.setIsOfficial(cl.getIsOfficial());
+                                language.setPercentage(cl.getPercentage());
+                                return language;
+                            })
                             .collect(Collectors.toList());
-                    return CityCountry.builder()
-                            .id(city.getId())
-                            .name(city.getName())
-                            .district(city.getDistrict())
-                            .population(city.getPopulation())
-                            .countyCode(country.getCode())
-                            .countyAlternativeCode(country.getAlternativeCode())
-                            .countyName(country.getName())
-                            .continent(country.getContinent())
-                            .countyRegion(country.getRegion())
-                            .countySurfaceArea(country.getSurfaceArea())
-                            .countyPopulation(country.getPopulation())
-                            .languages(languages)
-                            .build();
+                    CityCountry cityCountry = new CityCountry();
+                    cityCountry.setId(city.getId());
+                    cityCountry.setName(city.getName());
+                    cityCountry.setDistrict(city.getDistrict());
+                    cityCountry.setPopulation(city.getPopulation());
+                    cityCountry.setCountyCode(country.getCode());
+                    cityCountry.setCountyAlternativeCode(country.getAlternativeCode());
+                    cityCountry.setCountyName(country.getName());
+                    cityCountry.setContinent(country.getContinent());
+                    cityCountry.setCountyRegion(country.getRegion());
+                    cityCountry.setCountySurfaceArea(country.getSurfaceArea());
+                    cityCountry.setCountyPopulation(country.getPopulation());
+                    cityCountry.setLanguages(languages);
+                    return cityCountry;
                 }).collect(Collectors.toList());
     }
 
