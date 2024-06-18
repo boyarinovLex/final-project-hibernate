@@ -33,7 +33,7 @@ public class AppStarter {
         cityService.getListByIds(ids);
         long endDB = System.currentTimeMillis();
 
-        System.out.printf("Query execution time:\nRedis:\t%d\nDatabase:\t%d\n", (endRedis - startRedis), (endDB - startDB));
+        System.out.printf("Query execution time:\nRedis:\t%d ms\nDatabase:\t%d ms\n", (endRedis - startRedis), (endDB - startDB));
 
         sessionCreator.close();
     }
